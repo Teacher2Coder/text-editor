@@ -1,5 +1,5 @@
 {
-  "name": "text-editor",
+  "name": "J.A.T.E.",
   "version": "1.0.0",
   "description": "This application allows user to edit text in the browser!",
   "main": "server.js",
