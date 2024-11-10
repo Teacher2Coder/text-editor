@@ -20,7 +20,6 @@ module.exports = () => {
     plugins: [
       new HtmlWebpackPlugin({
         template: './index.html',
-        title: 'Webpack Plugin',
       }),
       new WebpackPwaManifest({
         name: 'J.A.T.E.',

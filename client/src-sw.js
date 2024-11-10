@@ -28,14 +28,17 @@ registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // TODO: Implement asset caching
 registerRoute(
-  ({url, request, event}) => {
-    return url.pathname === '/special/url';
-  },
-  async ({url, request, event, params}) => {
-    const response = await fetch(request);
-    const responseBody = await response.text();
-    return new Response(`${responseBody} <!-- Look Ma. Added Content. -->`, {
-      headers: response.headers,
-    });
-  }
+  ({ request }) => request.destination === 'image',
+  new CacheFirst({
+    cacheName: 'assets',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+      })
+    ]
+  })
 );
