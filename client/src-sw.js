@@ -27,4 +27,15 @@ warmStrategyCache({
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // TODO: Implement asset caching
-registerRoute();
+registerRoute(
+  ({url, request, event}) => {
+    return url.pathname === '/special/url';
+  },
+  async ({url, request, event, params}) => {
+    const response = await fetch(request);
+    const responseBody = await response.text();
+    return new Response(`${responseBody} <!-- Look Ma. Added Content. -->`, {
+      headers: response.headers,
+    });
+  }
+);
